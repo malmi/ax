@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import 'message.dart';
-import 'messageBus.dart';
+import 'message_bus.dart';
 
 class CombinedMessageBus implements MessageBus {
   final Iterable<MessageBus> messageBuses;

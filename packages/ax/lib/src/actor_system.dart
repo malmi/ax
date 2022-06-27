@@ -1,5 +1,7 @@
-import 'hydratedActor.dart';
-import 'statelessActor.dart';
+import 'package:collection/collection.dart';
+
+import 'actor_hydrated.dart';
+import 'actor_stateless.dart';
 
 class ActorSystem {
   void Function(IActor actor, dynamic ex, StackTrace st) onError =
@@ -7,10 +9,10 @@ class ActorSystem {
 
   ActorSystem._();
 
-  static ActorSystem _instance;
+  static ActorSystem? _instance;
   static ActorSystem get instance {
     _instance ??= ActorSystem._();
-    return _instance;
+    return _instance!;
   }
 
   final _actors = <IActor>[];
@@ -19,10 +21,7 @@ class ActorSystem {
   void addAll(Iterable<IActor> actors) => actors.forEach(add);
 
   TActor? get<TActor>() {
-    return _actors.firstWhere(
-      (element) => element is TActor,
-      orElse: () => null,
-    ) as TActor?;
+    return _actors.firstWhereOrNull((element) => element is TActor) as TActor?;
   }
 
   bool remove(IActor actor) => _actors.remove(actor);

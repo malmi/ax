@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import 'message.dart';
-import 'messageBus.dart';
+import 'message_bus.dart';
 
 class MemoryMessageBus implements MessageBus {
   final _subject = PublishSubject<Message>();

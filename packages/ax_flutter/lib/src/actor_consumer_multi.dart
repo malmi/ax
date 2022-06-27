@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import './actorConsumer.dart';
+import 'actor_consumer.dart';
 
 class MultiActorConsumer extends MultiProvider {
   MultiActorConsumer({

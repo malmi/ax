@@ -1,3 +1,3 @@
-export './storage/fileStorage.dart';
-export './storage/noopStorage.dart';
-export './storage/storage.dart';
+export 'storage/storage.dart';
+export 'storage/storage_file.dart';
+export 'storage/storage_noop.dart';

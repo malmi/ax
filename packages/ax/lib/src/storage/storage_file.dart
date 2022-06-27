@@ -6,7 +6,7 @@ import 'storage.dart';
 class FileStorage implements ActorStorage {
   final Directory _directory;
 
-  FileStorage({Directory directory}) : _directory = directory;
+  FileStorage({required Directory directory}) : _directory = directory;
 
   File getFile(String key) {
     final filename = key.replaceAll(RegExp(r'[/\\?%*:|"<>]'), '');
@@ -17,7 +17,7 @@ class FileStorage implements ActorStorage {
   Future<Map<String, dynamic>> get(String key) async {
     final file = getFile(key);
     if (!file.existsSync()) {
-      return null;
+      return {};
     }
 
     return jsonDecode(await file.readAsString()) as Map<String, dynamic>;

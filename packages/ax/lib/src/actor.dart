@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_ext/rxdart_ext.dart';
 
-import 'messageBus.dart';
-import 'statelessActor.dart';
+import 'actor_stateless.dart';
+import 'message_bus.dart';
 
 typedef MessageEmitter<TState> = Future<void> Function(TState state);
 

@@ -1,8 +1,7 @@
+import 'package:ax/ax.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-
-import 'statelessActor.dart';
 
 class FutureActorProvider<T extends IActor> extends FutureProvider<T> {
   FutureActorProvider({

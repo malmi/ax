@@ -1,13 +1,11 @@
 import 'dart:async';
 
+import 'package:ax/ax.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'actor.dart';
-import 'actorProvider.dart';
-
-part 'actorConsumer2.dart';
-part 'actorConsumer3.dart';
+part 'actor_consumer2.dart';
+part 'actor_consumer3.dart';
 
 mixin ActorConsumerSingleChildWidget on SingleChildWidget {}
 
@@ -54,11 +52,9 @@ class _ActorConsumerState<TActor extends Actor<TState>, TState>
 
     final actor = ActorProvider.of<TActor>(context);
     if (_actor != actor) {
-      if (_subscription != null) {
-        _unsubscribe();
-        _actor = actor;
-        _previousState = _state = _actor.state;
-      }
+      _unsubscribe();
+      _actor = actor;
+      _previousState = _state = _actor.state;
       _subscribe();
     }
   }
@@ -76,9 +72,7 @@ class _ActorConsumerState<TActor extends Actor<TState>, TState>
 
   void _subscribe() {
     _subscription = _actor.states.listen((state) {
-      if (widget.listener != null) {
-        widget.listener(context, _previousState, state);
-      }
+      widget.listener(context, _previousState, state);
       setState(() {
         _previousState = _state = state;
       });
@@ -86,7 +80,7 @@ class _ActorConsumerState<TActor extends Actor<TState>, TState>
   }
 
   void _unsubscribe() {
-    _subscription?.cancel();
+    _subscription.cancel();
     _subscription = null;
   }
 }

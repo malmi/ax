@@ -1,4 +1,4 @@
-part of 'actorConsumer.dart';
+part of 'actor_consumer.dart';
 
 typedef ActorBuilder3<S1, S2, S3> = Widget Function(
     BuildContext context, S1 state1, S2 state2, S3 state3);

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import 'actorSystem.dart';
-import 'messageBus.dart';
+import 'actor_system.dart';
+import 'message_bus.dart';
 
 typedef MessageHandler<TEvent> = Future<void> Function(TEvent event);
 
@@ -20,19 +20,21 @@ abstract class IActor {
 
 abstract class StatelessActor implements IActor {
   final _handlers = <_Handler>[];
-  final _subscriptions = <StreamSubscription<Message>>[];
   final MessageBus _messageBus;
+  late StreamSubscription<void> _subscription;
 
-  StatelessActor(MessageBus messageBus)
-      : assert(messageBus != null),
-        _messageBus = messageBus {
+  StatelessActor(MessageBus messageBus) : _messageBus = messageBus {
     ActorSystem.instance.add(this);
+
+    _subscription = _messageBus.stream
+        .asyncExpand((event) => Stream.fromFuture(_onMessage(event)))
+        .listen(null);
   }
 
   @override
   void onMessage<TMessage extends Message>(
     MessageHandler<TMessage> handler, {
-    void Function(dynamic err, StackTrace stackTrace) onError,
+    void Function(dynamic err, StackTrace stackTrace)? onError,
   }) {
     final handlerExists = _handlers.any((h) => h.type == TMessage);
     if (handlerExists) {
@@ -41,24 +43,21 @@ abstract class StatelessActor implements IActor {
       );
     }
 
-    _handlers.add(_Handler(isType: (dynamic e) => e is TMessage, type: TMessage));
+    _handlers.add(_Handler(
+      isType: (dynamic e) => e is TMessage,
+      type: TMessage,
+      handler: (msg) async {
+        try {
+          await handler(msg as TMessage);
+        } catch (ex, st) {
+          if (onError != null) {
+            onError(ex, st);
+          }
 
-    final subscription = _messageBus.stream
-        .where((event) => event is TMessage)
-        .cast<TMessage>()
-        .listen((event) async {
-      try {
-        await handler(event);
-      } catch (ex, st) {
-        if (onError != null) {
-          onError(ex, st);
-        }
-        if (ActorSystem.instance.onError != null) {
           ActorSystem.instance.onError(this, ex, st);
         }
-      }
-    });
-    _subscriptions.add(subscription);
+      },
+    ));
   }
 
   @override
@@ -69,14 +68,25 @@ abstract class StatelessActor implements IActor {
   @mustCallSuper
   Future<void> close() async {
     ActorSystem.instance.remove(this);
-
     _handlers.clear();
-    await Future.wait<void>(_subscriptions.map((s) => s.cancel()));
+    await _subscription.cancel();
+  }
+
+  Future<void> _onMessage(Message event) async {
+    for (final handler in _handlers.where((h) => h.isType(event))) {
+      await handler.handler(event);
+    }
   }
 }
 
 class _Handler {
-  const _Handler({@required this.isType, @required this.type});
   final bool Function(dynamic value) isType;
   final Type type;
+  final MessageHandler<Message> handler;
+
+  const _Handler({
+    required this.isType,
+    required this.type,
+    required this.handler,
+  });
 }
