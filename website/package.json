@@ -1,0 +1,28 @@
+{
+  "name": "ax.documentation",
+  "description": "Poor folks version of actors for a nice state management that is more event driven and should be used if you are an advocate of event sourcing.",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/collabree/ax.git"
+  },
+  "keywords": [
+    "ax",
+    "actor",
+    "state-management",
+    "event-driven",
+    "flutter",
+    "documentation"
+  ],
+  "author": "Collabree AG",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/collabree/ax/issues"
+  },
+  "homepage": "https://github.com/collabree/ax#readme",
+  "scripts": {
+    "build": "vuepress build ../docs",
+    "dev": "vuepress dev ../docs"
+  }
+}
