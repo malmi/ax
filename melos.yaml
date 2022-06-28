@@ -16,24 +16,25 @@ command:
 
 scripts:
   analyze:
+    description: Run `dart analyze` in all packages.
     run: |
       melos exec -c 5 -- \
         dart analyze . --fatal-infos
-    description: Run `dart analyze` in all packages.
 
   format:
-    run: dart pub global run flutter_plugin_tools format
     description: Format code everywhere
+    run: dart pub global run flutter_plugin_tools format
 
   lint:
-    run: melos run analyze && melos run format
     description: Run all static analysis checks.
+    run: melos run analyze && melos run format
 
   clean:deep:
-    run: git clean -x -d -f -q
     description: Clean things very deeply, can be used to establish "pristine checkout" status.
+    run: git clean -x -d -f -q
 
   qualitycheck:
+    description: Run all targets generally expected in CI for a full local quality check.
     run: |
       melos run clean:deep && \
       melos clean && \
@@ -41,7 +42,6 @@ scripts:
       melos run lint:all && \
       melos run build:all && \
       melos run test:all
-    description: Run all targets generally expected in CI for a full local quality check.
 
   # Additional cleanup lifecycle script, executed when `melos clean` is run.
   postclean: >
