@@ -8,7 +8,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  ax: 0.0.1
+  ax: ^0.0.1
   flutter:
     sdk: flutter
   provider: ^6.0.3
