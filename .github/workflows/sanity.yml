@@ -13,16 +13,8 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
-      - name: 📥 Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: beta
-      - name: ⚡ Activate melos
-        run: |
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          pub global activate melos
-      - name: 👀 Bootstrap melos
-        run: melos bootstrap
+      - name: ✨ Setup
+        uses: ./.github/actions/setup
       - name: 🔬 Analyze package
         run: melos exec -- flutter analyze
 
@@ -34,16 +26,8 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
-      - name: 📥 Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: beta
-      - name: ⚡ Activate melos
-        run: |
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          pub global activate melos
-      - name: 👀 Bootstrap melos
-        run: melos bootstrap
+      - name: ✨ Setup
+        uses: ./.github/actions/setup
       - name: 🔎 Validate formatting
         run: |
           melos exec -- dart format -o write .
@@ -56,15 +40,7 @@ jobs:
         uses: styfle/cancel-workflow-action@0.9.1
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
-      - name: 📥 Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: beta
-      - name: ⚡ Activate melos
-        run: |
-          echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-          pub global activate melos
-      - name: 👀 Bootstrap melos
-        run: melos bootstrap
+      - name: ✨ Setup
+        uses: ./.github/actions/setup
       - name: ⚡ Run tests
         run: melos exec --dir-exists=test -- flutter test
