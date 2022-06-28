@@ -1,7 +1,6 @@
-import 'package:collection/collection.dart';
-
 import 'actor_hydrated.dart';
 import 'actor_stateless.dart';
+import 'extensions/iterable.dart';
 
 class ActorSystem {
   void Function(IActor actor, dynamic ex, StackTrace st) onError =

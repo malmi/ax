@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:time_machine/time_machine.dart';
-import 'package:time_machine/time_machine_text_patterns.dart';
 
 import 'actor.dart';
 import 'message_bus.dart';
@@ -59,7 +57,7 @@ abstract class HydratedActor<TState> extends Actor<TState> {
   @protected
   Future<void> persist(TState currentState) async {
     await _storage.put(getMetaKey(), <String, dynamic>{
-      't': InstantPattern.extendedIso.format(Instant.now()),
+      't': DateTime.now().toUtc().toIso8601String(),
       'v': ++version,
     });
     await _storage.put(getPersistenceKey(), toJson(currentState));

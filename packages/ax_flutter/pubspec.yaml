@@ -1,6 +1,7 @@
 name: ax_flutter
-description: A new Flutter package project.
+description: Poor folks version of actors for a nice state management that is more event driven and should be used if you are an advocate of event sourcing.
 version: 0.0.1
+repository: https://github.com/collabree/ax
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -10,9 +11,9 @@ dependencies:
   ax: 0.0.1
   flutter:
     sdk: flutter
-  provider:
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints:
