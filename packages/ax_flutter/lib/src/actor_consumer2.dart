@@ -1,17 +1,23 @@
 part of 'actor_consumer.dart';
 
 typedef ActorBuilder2<S1, S2> = Widget Function(
-    BuildContext context, S1 state1, S2 state2);
+  BuildContext context,
+  S1 state1,
+  S2 state2,
+);
 
 class ActorConsumer2<TActor1 extends Actor<TState1>, TState1,
     TActor2 extends Actor<TState2>, TState2> extends StatelessWidget {
-  final ActorBuilder2<TState1, TState2> builder;
-  final ActorListener<TState1> listenerOne;
-  final ActorListener<TState2> listenerTwo;
+  final ActorBuilder2<TState1?, TState2?> builder;
+  final ActorListener<TState1?> listenerOne;
+  final ActorListener<TState2?> listenerTwo;
 
-  const ActorConsumer2({Key key, this.builder, this.listenerOne, this.listenerTwo})
-      : assert(builder != null || listenerOne != null || listenerTwo != null),
-        super(key: key);
+  const ActorConsumer2({
+    Key? key,
+    required this.builder,
+    required this.listenerOne,
+    required this.listenerTwo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

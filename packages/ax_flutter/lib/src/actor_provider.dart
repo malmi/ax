@@ -3,25 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-class FutureActorProvider<T extends IActor> extends FutureProvider<T> {
-  FutureActorProvider({
-    Key key,
-    @required Create<Future<T>> create,
-    @required T initialData,
-    bool lazy = true,
-  }) : super(
-          key: key,
-          lazy: lazy,
-          create: create,
-          initialData: initialData,
-          // dispose: (_, actor) => actor.close(),
-        );
-}
-
 class ActorProvider<T extends IActor> extends Provider<T> {
   ActorProvider({
-    Key key,
-    @required Create<T> create,
+    Key? key,
+    required Create<T> create,
     bool lazy = true,
   }) : super(
           key: key,
@@ -31,9 +16,9 @@ class ActorProvider<T extends IActor> extends Provider<T> {
         );
 
   ActorProvider.value({
-    Key key,
-    @required T value,
-    Widget child,
+    Key? key,
+    required T value,
+    Widget? child,
   }) : super.value(
           key: key,
           value: value,
@@ -62,8 +47,8 @@ class ActorProvider<T extends IActor> extends Provider<T> {
 
 class MultiActorProvider extends MultiProvider {
   MultiActorProvider({
-    Key key,
-    @required List<SingleChildStatelessWidget> actors,
-    @required Widget child,
+    Key? key,
+    required List<SingleChildStatelessWidget> actors,
+    required Widget child,
   }) : super(key: key, providers: actors, child: child);
 }
