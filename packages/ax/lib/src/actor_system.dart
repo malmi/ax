@@ -1,4 +1,4 @@
-import 'actor_hydrated.dart';
+import 'actor.dart';
 import 'actor_stateless.dart';
 import 'extensions/iterable.dart';
 
@@ -28,8 +28,8 @@ class ActorSystem {
   Future<void> reload() => Future.wait(
         _actors
             // ignore: prefer_iterable_wheretype
-            .where((actor) => actor is HydratedActor)
-            .cast<HydratedActor>()
+            .where((actor) => actor is Actor)
+            .cast<Actor>()
             .map((actor) => actor.reload()),
       );
 }
