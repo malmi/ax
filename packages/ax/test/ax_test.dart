@@ -1,12 +1,37 @@
-// import 'package:flutter_test/flutter_test.dart';
+import 'package:ax/ax.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-// import 'package:ax/ax.dart';
+class Actor extends StatelessActor {
+  TestMessage? lastMessage;
 
-// void main() {
-//   test('adds one to input values', () {
-//     final calculator = Calculator();
-//     expect(calculator.addOne(2), 3);
-//     expect(calculator.addOne(-7), -6);
-//     expect(calculator.addOne(0), 1);
-//   });
-// }
+  Actor(MessageBus messageBus) : super(messageBus) {
+    onMessage((TestMessage msg) async {
+      lastMessage = msg;
+    });
+  }
+}
+
+class TestMessage extends Message {
+  final String description;
+
+  const TestMessage({required this.description});
+}
+
+void main() {
+  test('Actor Construction', () {
+    final mb = MemoryMessageBus();
+    final actor = Actor(mb);
+    expect(actor, isNotNull);
+  });
+
+  test('Simple Dispatch', () async {
+    final mb = MemoryMessageBus();
+    final actor = Actor(mb);
+    expect(actor.lastMessage, isNull);
+
+    // Dispatch a message
+    const msg = TestMessage(description: 'Hello');
+    await actor.dispatch(msg);
+    expect(actor.lastMessage, isNotNull);
+  });
+}
