@@ -1,1 +1,3 @@
-TBD
+# Contributing
+
+1. Malmi

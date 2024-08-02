@@ -53,7 +53,6 @@ abstract class StatelessActor implements IActor {
           if (onError != null) {
             onError(ex, st);
           }
-
           ActorSystem.instance.onError(this, ex, st);
         }
       },
@@ -73,7 +72,9 @@ abstract class StatelessActor implements IActor {
   }
 
   Future<void> _onMessage(Message event) async {
-    for (final handler in _handlers.where((h) => h.isType(event))) {
+    // Local copy for concurrent modifications
+    final localHandlers = [..._handlers];
+    for (final handler in localHandlers.where((h) => h.isType(event))) {
       await handler.handler(event);
     }
   }

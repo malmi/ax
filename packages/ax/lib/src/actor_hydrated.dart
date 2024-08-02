@@ -43,10 +43,10 @@ abstract class HydratedActor<TState> extends Actor<TState> {
   Future<void> hydrate() async {
     try {
       final meta = await _storage.get(getMetaKey());
-      version = meta.containsKey('v') ? meta['v'] as int : 0;
+      version = meta != null && meta.containsKey('v') ? meta['v'] as int : 0;
 
       final json = await _storage.get(getPersistenceKey());
-      if (json.isEmpty) {
+      if (json == null || json.isEmpty) {
         return;
       }
 
@@ -65,12 +65,16 @@ abstract class HydratedActor<TState> extends Actor<TState> {
       't': DateTime.now().toUtc().toIso8601String(),
       'v': ++version,
     });
-    await _storage.put(getPersistenceKey(), toJson(currentState));
+
+    final json = toJson(currentState);
+    if (json != null) {
+      await _storage.put(getPersistenceKey(), json);
+    }
   }
 
   @protected
-  TState fromJson(Map<String, dynamic> json);
+  TState? fromJson(Map<String, dynamic>? json);
 
   @protected
-  Map<String, dynamic> toJson(TState state);
+  Map<String, dynamic>? toJson(TState? state);
 }

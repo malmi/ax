@@ -1,10 +1,10 @@
 {
   "dart.analysisExcludedFolders": [],
   "dart.lineLength": 88,
-  "dart.runPubGetOnPubspecChanges": false,
+  "dart.runPubGetOnPubspecChanges": "always",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.fixAll": true
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
   }
 }

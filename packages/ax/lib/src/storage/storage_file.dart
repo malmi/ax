@@ -14,17 +14,21 @@ class FileStorage implements ActorStorage {
   }
 
   @override
-  Future<Map<String, dynamic>> get(String key) async {
+  Future<Map<String, dynamic>?> get(String key) async {
     final file = getFile(key);
     if (!file.existsSync()) {
-      return {};
+      return null;
     }
 
     return jsonDecode(await file.readAsString()) as Map<String, dynamic>;
   }
 
   @override
-  Future<void> put(String key, Map<String, dynamic> json) async {
+  Future<void> put(String key, Map<String, dynamic>? json) async {
+    if (key.isEmpty || json == null) {
+      return;
+    }
+
     var file = getFile(key);
     if (!file.existsSync()) {
       file = await file.create(recursive: true);
