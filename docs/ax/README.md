@@ -1,5 +1,5 @@
 ---
-title: AX
+title: ax
 ---
 
-# AX
+# ax

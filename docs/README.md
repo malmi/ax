@@ -16,5 +16,5 @@ footer: BSD-3-Clause Licensed | Copyright ©2022 Collabree AG
 ---
 
 ::: slot footer
-BSD-3-Clause Licensed | Copyright ©2022 [Collabree AG](https://www.collabree.com)
+MIT Licensed | Copyright ©2024 Michael Malcharek
 :::
