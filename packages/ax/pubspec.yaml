@@ -1,5 +1,5 @@
 name: ax
-description: Poor folks version of actors for a nice state management that is more event driven and should be used if you are an advocate of event sourcing.
+description: Poor folk's version of actors for a nice state management that is more event-driven and should be used if you are an advocate of event sourcing.
 version: 0.0.2
 repository: https://github.com/malmi/ax
 
@@ -17,3 +17,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints:
+
+topics:
+  - state-management
+  - event-driven
+  - actor
